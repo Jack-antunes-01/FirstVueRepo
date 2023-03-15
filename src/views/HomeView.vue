@@ -1,18 +1,23 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <img alt="Vue logo" src="../assets/logo.png" />
+
+    <h1>Contador: {{ counter }}</h1>
+
+    <button @click="increment">+</button>
+    <button @click="decrement">-</button>
+    <button @click="reset">Zerar</button>
   </div>
 </template>
 
-<script lang="ts">
-import { Options, Vue } from 'vue-class-component';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+<script setup lang="ts">
+import { useCounterStore } from '@/stores/CounterStore';
+import { mapActions, storeToRefs } from 'pinia';
 
-@Options({
-  components: {
-    HelloWorld,
-  },
-})
-export default class HomeView extends Vue {}
+const { counter } = storeToRefs(useCounterStore());
+const { decrement, increment, reset } = mapActions(useCounterStore, [
+  'increment',
+  'decrement',
+  'reset',
+]);
 </script>
